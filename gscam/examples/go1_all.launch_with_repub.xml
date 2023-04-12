@@ -1,0 +1,104 @@
+<launch>
+  <!-- This launchfile should bring up a node that broadcasts a ros image
+       transport on go1/cam_abdomen/image_raw -->
+
+  <arg name="DEVICE" default="9205"/>
+  <!-- The GStreamer framerate needs to be an integral fraction -->
+  <arg name="FPS" default="30/1"/>
+  <arg name="PUBLISH_FRAME" default="true"/>
+
+  <node namespace="go1" name="abdo_gscam" pkg="gscam" exec="gscam_node" output="screen">
+    <param name="camera_name" value="cam_abdomen"/>
+    <param name="camera_info_url" value="package://gscam/examples/uncalibrated_parameters.ini"/>
+    <param name="gscam_config" value="udpsrc port=9205 ! application/x-rtp, media=video,encoding-name=H264 ! rtph264depay ! h264parse ! avdec_h264 ! videoflip method=rotate-180 ! videoconvert"/>
+    <param name="frame_id" value="/abdo_frame"/>
+    <param name="sync_sink" value="false"/>
+  </node>
+
+  <node if="$(var PUBLISH_FRAME)" name="v4l_transform" pkg="tf2_ros" exec="static_transform_publisher" args="1 2 3 0 -3.141 0 /world /v4l_frame"/>
+
+
+
+  <!-- This launchfile should bring up a node that broadcasts a ros image
+       transport on go1/cam_chin/image_raw -->
+
+  <arg name="DEVICE" default="9202"/>
+  <!-- The GStreamer framerate needs to be an integral fraction -->
+  <arg name="FPS" default="30/1"/>
+  <arg name="PUBLISH_FRAME" default="true"/>
+
+  <node namespace="go1" name="chin_gscam" pkg="gscam" exec="gscam_node" output="screen">
+    <param name="camera_name" value="cam_chin"/>
+    <param name="camera_info_url" value="package://gscam/examples/uncalibrated_parameters.ini"/>
+    <param name="gscam_config" value="udpsrc port=9202 ! application/x-rtp, media=video,encoding-name=H264 ! rtph264depay ! h264parse ! avdec_h264 ! videoflip method=rotate-180 ! videoconvert"/>
+    <param name="frame_id" value="/chin_frame"/>
+    <param name="sync_sink" value="false"/>
+  </node>
+
+  <node if="$(var PUBLISH_FRAME)" name="v4l_transform" pkg="tf2_ros" exec="static_transform_publisher" args="1 2 3 0 -3.141 0 /world /v4l_frame"/>
+
+
+
+  <!-- This launchfile should bring up a node that broadcasts a ros image
+       transport on go1/cam_front/image_raw -->
+
+  <arg name="DEVICE" default="9201"/>
+  <!-- The GStreamer framerate needs to be an integral fraction -->
+  <arg name="FPS" default="30/1"/>
+  <arg name="PUBLISH_FRAME" default="true"/>
+
+  <node namespace="go1" name="frnt_gscam" pkg="gscam" exec="gscam_node" output="screen">
+    <param name="camera_name" value="cam_front"/>
+    <param name="camera_info_url" value="package://gscam/examples/uncalibrated_parameters.ini"/>
+    <param name="gscam_config" value="udpsrc port=9201 ! application/x-rtp, media=video,encoding-name=H264 ! rtph264depay ! h264parse ! avdec_h264 ! videoflip method=rotate-180 ! videoconvert"/>
+    <param name="frame_id" value="/frnt_frame"/>
+    <param name="sync_sink" value="false"/>
+  </node>
+
+  <node if="$(var PUBLISH_FRAME)" name="v4l_transform" pkg="tf2_ros" exec="static_transform_publisher" args="1 2 3 0 -3.141 0 /world /v4l_frame"/>
+
+
+
+  <!-- This launchfile should bring up a node that broadcasts a ros image
+       transport on go1/cam_left/image_raw -->
+
+  <arg name="DEVICE" default="9203"/>
+  <!-- The GStreamer framerate needs to be an integral fraction -->
+  <arg name="FPS" default="30/1"/>
+  <arg name="PUBLISH_FRAME" default="true"/>
+
+  <node namespace="go1" name="left_gscam" pkg="gscam" exec="gscam_node" output="screen">
+    <param name="camera_name" value="cam_left"/>
+    <param name="camera_info_url" value="package://gscam/examples/uncalibrated_parameters.ini"/>
+    <param name="gscam_config" value="udpsrc port=9203 ! application/x-rtp, media=video,encoding-name=H264 ! rtph264depay ! h264parse ! avdec_h264 ! videoflip method=rotate-180 ! videoconvert"/>
+    <param name="frame_id" value="/left_frame"/>
+    <param name="sync_sink" value="false"/>
+  </node>
+
+  <node if="$(var PUBLISH_FRAME)" name="v4l_transform" pkg="tf2_ros" exec="static_transform_publisher" args="1 2 3 0 -3.141 0 /world /v4l_frame"/>
+
+
+
+  <!-- This launchfile should bring up a node that broadcasts a ros image
+       transport on go1/cam_right/image_raw -->
+
+  <arg name="DEVICE" default="9204"/>
+  <!-- The GStreamer framerate needs to be an integral fraction -->
+  <arg name="FPS" default="30/1"/>
+  <arg name="PUBLISH_FRAME" default="true"/>
+
+  <node namespace="go1" name="rght_gscam" pkg="gscam" exec="gscam_node" output="screen">
+    <param name="camera_name" value="cam_right"/>
+    <param name="camera_info_url" value="package://gscam/examples/uncalibrated_parameters.ini"/>
+    <param name="gscam_config" value="udpsrc port=9204 ! application/x-rtp, media=video,encoding-name=H264 ! rtph264depay ! h264parse ! avdec_h264 ! videoflip method=rotate-180 ! videoconvert"/>
+    <param name="frame_id" value="/rght_frame"/>
+    <param name="sync_sink" value="false"/>
+  </node>
+
+  <node if="$(var PUBLISH_FRAME)" name="v4l_transform" pkg="tf2_ros" exec="static_transform_publisher" args="1 2 3 0 -3.141 0 /world /v4l_frame"/>
+  
+  
+  
+  
+  <node pkg="cut_n_repub" exec="go1_all_repub" namespace="go1"/>
+</launch>
