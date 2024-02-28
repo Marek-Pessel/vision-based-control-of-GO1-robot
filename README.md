@@ -45,7 +45,7 @@ Create a ROS Workspace
 		
 Clone this repo into your src
 	
-		git clone https://gitlab.bht-berlin.de/kogrob-go1/kogrob_go1.git
+		git clone https://github.com/Marek-Pessel/vision-based-control-of-GO1-robot.git
 		cd ..
 		
 Now build your packages
